@@ -10,7 +10,7 @@
 # =====================
 
 app=$(basename "$0")
-app_dir="`locate -b "\ark-failover"`"
+app_dir=$(locate -b '\ark-failover')
 app_log="${app_dir}/failover.log"
 log_dir="${app_dir}/logs_monitor"
 . "${app_dir}/variables.sh"

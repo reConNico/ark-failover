@@ -24,7 +24,7 @@ The master node only need to run the failover script and have a functioning ssh 
 
 * `git clone https://github.com/reconnico/ark-failover.git`
 * `cd ~/ark-failover`
-* `bash failover.sh install`
+* `bash failover.sh install` (if the error `No such file or directory` occurs please run `sudo updatedb`)
 * insert your secret in `variables.sh`
 * edit `nodes.txt` and set your nodes `forging;relay` (use ssh host names of your nodes here)
 * `bash failover.sh test` (If an error occured please repeat the last 2 steps and check your configuration)
