@@ -7,6 +7,8 @@
 
 app_install()
 {
+    ## TODO: insert npm install
+
     info "Starting Installation..."
 
     if [[ -z $(command -v pm2) ]]; then

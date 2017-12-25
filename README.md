@@ -1,5 +1,6 @@
 # ARK-Failover
 
+## DO NOT USE UNTIL THE STABLE RELEASE!
 ## Use at own risk any time! Stable release will be published soon!
 
 ## Requirements
