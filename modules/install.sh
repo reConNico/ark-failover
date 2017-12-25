@@ -8,6 +8,7 @@
 app_install()
 {
     ## TODO: insert npm install
+    ## TODO: insert node install
 
     info "Starting Installation..."
 
