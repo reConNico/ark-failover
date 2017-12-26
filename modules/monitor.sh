@@ -28,8 +28,7 @@ monitor()
 monitor_node()
 {
     ## TODO: check if server is reachable and rebuild if not
-    ## TODO: insert ${monitor_lines} and test!
-    if ssh -n $1 tail -2 ark-node/logs/ark.log | grep -q "Blockchain not ready to receive block";
+    if ssh -n $1 tail -${monitor_lines} ark-node/logs/ark.log | grep -q "Blockchain not ready to receive block";
     then
         SECONDS=0
         log "[switch] ${node_forging} -> ${node_relay}"
@@ -38,6 +37,9 @@ monitor_node()
         set_secret ${node_relay} ${secret}
         ark_start ${node_relay}
         log "[set secret on relay] finished!"
+
+        block_height ${node_forging}
+        log "[blockheight] ${blockheight_node}/${blockheight_net} (node/net)"
 
         ## reset secret on forging node
         set_secret ${node_forging}

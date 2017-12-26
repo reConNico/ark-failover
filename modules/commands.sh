@@ -53,7 +53,7 @@ app_update()
     local remote_version=$(git rev-parse origin/master)
     local local_version=$(git rev-parse HEAD)
 
-    if [[ $local_version == $remote_version ]]
+    if [[ $remote_version == $local_version ]]
         then
             info 'You are already using the latest version.'
         else

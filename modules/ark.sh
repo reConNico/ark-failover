@@ -36,3 +36,12 @@ ark_stop()
     forever stopall
 ENDSSH
 }
+
+# =====================
+# @param node $1
+# =====================
+block_height()
+{
+    blockheight_node=$(ssh $1 'echo $(psql -d ark_mainnet -t -c "SELECT height FROM blocks ORDER BY HEIGHT DESC LIMIT 1;" | xargs)')
+    blockheight_net=$(ssh $1 'heights=$(curl -s "http://localhost:4001/api/peers" | jq -r ".peers[] | .height") && echo $(echo "${heights[*]}" | sort -nr | head -n1)')
+}
