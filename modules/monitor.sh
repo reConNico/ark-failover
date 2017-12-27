@@ -28,6 +28,7 @@ monitor()
 monitor_node()
 {
     ## TODO: check if server is reachable and rebuild if not
+    ## TODO: check if ssh connection close correctly
     if ssh -n $1 tail -${monitor_lines} ark-node/logs/ark.log | grep -q "Blockchain not ready to receive block";
     then
         SECONDS=0

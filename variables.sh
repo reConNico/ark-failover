@@ -15,7 +15,7 @@ secret="one two three four five six seven eight nine ten eleven twelve"
 # =====================
 # Monitor
 # =====================
-monitor_lines=2
+monitor_lines=10
 monitor_sleep=120
 
 # =====================

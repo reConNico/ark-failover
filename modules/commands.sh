@@ -5,6 +5,8 @@
 # @author		  : Nico Allers <info@reconnico.com>
 #==============================================================================
 
+## TODO: Add command "nodes". Displays current nodes and their blockheights
+
 app_start()
 {
     info "Starting application..."
@@ -14,6 +16,7 @@ app_start()
 
 app_stop()
 {
+    ## TODO: check if rebuild happens right now and wait for it
     info "Stopping application..."
     pm2 stop ${app_dir}/apps.json >> ${app_log} 2>&1
     success "Stop complete!"
@@ -106,7 +109,7 @@ options:
     restart                   Restart the application.
     test                      Test the application.
     switch                    Switch the forging node.
-    rebuild [node]            Rebuild a relay using noah.
+    rebuild [node]            Rebuild a node using noah.
     update                    Update the application to the latest version.
     status                    Display the status of the application.
     log                       Show log information.
