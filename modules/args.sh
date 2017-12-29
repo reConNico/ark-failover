@@ -36,6 +36,9 @@ parse_args()
         update)
             app_update
         ;;
+        nodes)
+            app_nodes
+        ;;
         monitor)
             monitor
         ;;

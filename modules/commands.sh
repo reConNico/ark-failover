@@ -75,6 +75,15 @@ app_update()
     fi
 }
 
+app_nodes()
+{
+    get_nodes
+    block_height ${node_forging}
+    info "Forging node: ${node_forging} (${blockheight_node}/${blockheight_net})"
+    block_height ${node_relay}
+    info "Relay node: ${node_relay} (${blockheight_node}/${blockheight_net})"
+}
+
 app_status()
 {
     pm2 list
@@ -111,6 +120,7 @@ options:
     switch                    Switch the forging node.
     rebuild [node]            Rebuild a node using noah.
     update                    Update the application to the latest version.
+    nodes                     Display current nodes information.
     status                    Display the status of the application.
     log                       Show log information.
     alias                     Create a bash alias for failover.

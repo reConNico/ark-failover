@@ -43,8 +43,9 @@ options:
     restart                   Restart the application.
     test                      Test the application.
     switch                    Switch the forging node.
-    rebuild [node]            Rebuild a relay using noah.
+    rebuild [node]            Rebuild a node using noah.
     update                    Update the application to the latest version.
+    nodes                     Display current nodes information.
     status                    Display the status of the application.
     log                       Show log information.
     alias                     Create a bash alias for failover.
