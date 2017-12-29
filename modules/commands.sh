@@ -5,8 +5,6 @@
 # @author		  : Nico Allers <info@reconnico.com>
 #==============================================================================
 
-## TODO: Add command "nodes". Displays current nodes and their blockheights
-
 app_start()
 {
     info "Starting application..."
@@ -16,8 +14,8 @@ app_start()
 
 app_stop()
 {
-    ## TODO: check if rebuild happens right now and wait for it
     info "Stopping application..."
+    lock_check
     pm2 stop ${app_dir}/apps.json >> ${app_log} 2>&1
     success "Stop complete!"
 }
@@ -25,6 +23,7 @@ app_stop()
 app_restart()
 {
     info "Restarting application..."
+    lock_check
     pm2 restart ${app_dir}/apps.json >> ${app_log} 2>&1
     success "Restart complete!"
 }

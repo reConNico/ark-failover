@@ -15,6 +15,7 @@ monitor()
     log "[monitor] forging: ${node_forging}"
     log "[monitor] relay: ${node_relay}"
 
+
     while true; do
         monitor_node ${node_forging}
     done
@@ -29,9 +30,11 @@ monitor_node()
 {
     ## TODO: check if server is reachable and rebuild if not
     ## TODO: check if ssh connection close correctly
+    ## TODO: build up the ssh connection every 8 seconds
     if ssh -n $1 tail -${monitor_lines} ark-node/logs/ark.log | grep -q "Blockchain not ready to receive block";
     then
         SECONDS=0
+        lock_create
         log "[switch] ${node_forging} -> ${node_relay}"
 
         ## set secret on relay
@@ -59,6 +62,7 @@ monitor_node()
         log "[monitor] sleep for ${monitor_sleep} seconds..."
         sleep ${monitor_sleep}
         log "[monitor] restarting..."
+        lock_remove
         app_restart
     fi
 }

@@ -10,7 +10,7 @@ switch()
     info "Switching nodes..."
 
     app_stop
-
+    lock_create
     get_nodes
 
     # set empty secret for forging node and restart forever process
@@ -30,6 +30,7 @@ switch()
     info "sleep for ${monitor_sleep} seconds..."
     sleep ${monitor_sleep}
     info "restarting application..."
+    lock_remove
     app_restart
 
     success "Switch complete!"

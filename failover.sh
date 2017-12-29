@@ -23,6 +23,7 @@ log_dir="${app_dir}/logs_monitor"
 . "${app_dir}/modules/ark.sh"
 . "${app_dir}/modules/commands.sh"
 . "${app_dir}/modules/install.sh"
+. "${app_dir}/modules/lock.sh"
 . "${app_dir}/modules/log.sh"
 . "${app_dir}/modules/monitor.sh"
 . "${app_dir}/modules/nodes.sh"
@@ -38,12 +39,7 @@ log_dir="${app_dir}/logs_monitor"
 
 main()
 {
-    #setup_environment
-    #check_configuration
-
     parse_args "$@"
-
-    #trap cleanup SIGINT SIGTERM SIGKILL
 }
 
 main "$@"
