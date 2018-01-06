@@ -64,6 +64,7 @@ monitor_nodes()
         SECONDS=0
         lock_create
         log "[rebuild] ${node_relay} starting..."
+        log "[blockheight] ${blockheight_node}/${blockheight_net} (node/net)"
         rebuild ${node_relay}
         log "[rebuild] ${node_relay} finished!"
 
