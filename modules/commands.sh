@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 #==============================================================================
-# description     : Coammands of the application.
+# description     : Commands of the application.
 # @author		  : Nico Allers <info@reconnico.com>
 #==============================================================================
 
@@ -50,6 +50,7 @@ app_rebuild()
 
 app_update()
 {
+    ## TODO: store variables and secret to reset them correctly after update
     cd ${app_dir}
 
     local remote_version=$(git rev-parse origin/master)
@@ -90,11 +91,7 @@ app_status()
 
 app_log()
 {
-    if [ ! -e ${app_log} ]; then
-        touch ${app_log}
-    fi
-
-    tail -f ${app_log}
+    tail -f `/bin/ls -1td ${log_dir}/*| /usr/bin/head -n1`
 }
 
 app_alias()

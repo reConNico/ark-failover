@@ -16,7 +16,7 @@ set_nodes()
 
 get_nodes()
 {
-    nodes=$(<nodes.txt)
+    nodes=$(<${app_dir}/nodes.txt)
     node_forging="$(cut -d';' -f1 <<<${nodes})"
     node_relay="$(cut -d';' -f2 <<<${nodes})"
 }

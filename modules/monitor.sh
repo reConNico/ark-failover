@@ -17,22 +17,19 @@ monitor()
 
 
     while true; do
-        monitor_node ${node_forging}
+        monitor_nodes
     done
 
     info "Closing Monitor..."
 }
 
-# =====================
-# @param node $1
-# =====================
-monitor_node()
+monitor_nodes()
 {
-    ## TODO: check if server is reachable and rebuild if not
-    ## TODO: check if ssh connection close correctly
-    ## TODO: build up the ssh connection every 8 seconds
-    if ssh -n $1 tail -${monitor_lines} ark-node/logs/ark.log | grep -q "Blockchain not ready to receive block";
-    then
+    ## check block height of forging node
+    block_height ${node_forging}
+    log "${blockheight_node}/${blockheight_net}"
+    if [ -z ${blockheight_net} ] || [ ! `is_forging ${node_forging}` ] || [ ${blockheight_net} -gt ${blockheight_node} ]; then
+        ## forging is out of sync
         SECONDS=0
         lock_create
         log "[switch] ${node_forging} -> ${node_relay}"
@@ -50,19 +47,41 @@ monitor_node()
         log "[reset secret on forging] finished!"
 
         ## rebuild database and reset secret on forging
-        log "[rebuild] starting..."
+        log "[rebuild] ${node_forging} starting..."
         rebuild ${node_forging}
-        log "[rebuild] finished!"
+        log "[rebuild] ${node_forging} finished!"
 
         ## set nodes.txt
         set_nodes ${node_relay} ${node_forging}
         log "[set nodes] finished!"
 
-        # sleep and restart application
-        log "[monitor] sleep for ${monitor_sleep} seconds..."
-        sleep ${monitor_sleep}
-        log "[monitor] restarting..."
-        lock_remove
-        app_restart
+        monitor_finish
     fi
+
+    ## check block height of relay node
+    block_height ${node_relay}
+    log "${blockheight_node}/${blockheight_net}"
+    if [ -z ${blockheight_net} ] || [ ${blockheight_net} -gt ${blockheight_node} ]; then
+        ## relay is out of sync
+        SECONDS=0
+        lock_create
+        log "[rebuild] ${node_relay} starting..."
+        rebuild ${node_relay}
+        log "[rebuild] ${node_relay} finished!"
+
+        monitor_finish
+    fi
+
+    sleep ${monitor_interval}
+}
+
+monitor_finish()
+{
+    # sleep and restart application
+    log "[monitor] sleep for ${monitor_sleep} seconds..."
+    sleep ${monitor_sleep}
+    log "[monitor] restarting..."
+    lock_remove
+    app_restart
+    exit
 }

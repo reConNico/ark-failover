@@ -5,14 +5,14 @@
 # @author		  : Nico Allers <info@reconnico.com>
 #==============================================================================
 
+bold=$(tput bold)
+reset=$(tput sgr0)
+
 red=$(tput setaf 1)
 green=$(tput setaf 2)
 lila=$(tput setaf 4)
 
 bg_black=$(tput setab 8)
-
-bold=$(tput bold)
-reset=$(tput sgr0)
 
 # =====================
 # @param message $1

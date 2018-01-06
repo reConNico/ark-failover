@@ -22,8 +22,8 @@ lock_check()
     info "Checking lock file..."
     while [ -f ${app_dir}/app.lock ]
     do
-        info "Lock file is still there. Sleeping for 5 seconds..."
-        sleep 5
+        info "Please wait and don't interrupt! Lock file is still there. Sleeping for 2 seconds..."
+        sleep 2
     done
-    info "Lock file is not there! Continue..."
+    info "Lock file isn't there! Continue..."
 }
