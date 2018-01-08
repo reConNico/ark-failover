@@ -27,7 +27,7 @@ monitor_nodes()
 {
     ## check block height of forging node
     block_height ${node_forging}
-    if [ -z ${blockheight_net} ] || [ ! `is_forging ${node_forging}` ] || [ ${blockheight_net} -gt ${blockheight_node} ]; then
+    if [ -z ${blockheight_net} ] || [ ${blockheight_net} -gt ${blockheight_node} ]; then
         ## forging is out of sync
         SECONDS=0
         lock_create
