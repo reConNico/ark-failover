@@ -38,7 +38,6 @@ monitor_nodes()
         ark_start ${node_relay}
         log "[set secret on relay] finished!"
 
-        block_height ${node_forging}
         log "[blockheight] ${blockheight_node}/${blockheight_net} (node/net)"
 
         ## reset secret on forging node
