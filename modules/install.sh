@@ -7,24 +7,22 @@
 
 app_install()
 {
-    ## TODO: Test installation on blank system
-
     info "Starting Installation..."
 
     if [[ -z $(command -v npm) ]]; then
-        info "Installing nodejs..."
-        sudo apt-get install nodejs >> ${app_log} 2>&1
-        success "nodejs succesfully installed!"
-    else
-        info "nodejs already exists..."
-    fi
-
-    if [[ -z $(command -v npm) ]]; then
         info "Installing npm..."
-        sudo apt-get install npm >> ${app_log} 2>&1
+        sudo apt-get --assume-yes install npm >> ${app_log} 2>&1
         success "npm succesfully installed!"
     else
         info "npm already exists..."
+    fi
+
+    if [[ -z $(command -v node) ]]; then
+        info "Installing nodejs..."
+        sudo apt-get --assume-yes install nodejs-legacy >> ${app_log} 2>&1
+        success "nodejs succesfully installed!"
+    else
+        info "nodejs already exists..."
     fi
 
     if [[ -z $(command -v pm2) ]]; then
