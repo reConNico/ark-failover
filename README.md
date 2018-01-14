@@ -1,8 +1,5 @@
 # ARK-Failover
 
-## DO NOT USE UNTIL THE STABLE RELEASE!
-## Use at your own risk! Stable release will be published soon!
-
 ## Requirements
 
 To run the failover script you need 3 standalone servers. For the documentation we used the following names: 
