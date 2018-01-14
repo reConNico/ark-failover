@@ -31,3 +31,8 @@ set_secret()
     jq -r ".forging.secret = [\"${secret}\"]" config.${network}.json > config.${network}.tmp && mv config.${network}.tmp config.${network}.json
 ENDSSH
 }
+
+get_secret()
+{
+    secret=`cat ${app_dir}/secret.txt`
+}

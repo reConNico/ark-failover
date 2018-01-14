@@ -1,7 +1,7 @@
 # ARK-Failover
 
 ## DO NOT USE UNTIL THE STABLE RELEASE!
-## Use at own risk any time! Stable release will be published soon!
+## Use at your own risk! Stable release will be published soon!
 
 ## Requirements
 
@@ -26,7 +26,7 @@ The master node only need to run the failover script and have a functioning ssh 
 * `git clone https://github.com/reconnico/ark-failover.git`
 * `cd ~/ark-failover`
 * `bash failover.sh install` (if the error `No such file or directory` occurs please run `sudo updatedb`)
-* insert your secret in `variables.sh`
+* insert your secret in `secret.txt`
 * edit `nodes.txt` and set your nodes `forging;relay` (use ssh host names of your nodes here)
 * `bash failover.sh test` (If an error occur please repeat the last 2 steps and check your configuration)
 * `bash failover.sh start`
@@ -56,7 +56,7 @@ options:
 We recommend you to test the setup on a test environment first.
 
 * change the network variable in `variables.sh` to `devnet`
-* change the secret variable in `variables.sh` to your devnet delegate secret
+* change your secret in `secret.txt` to your devnet delegate secret
 * edit `nodes.txt` and set your nodes `forging;relay` (use ssh host names of your nodes here)
 
 ## Credits

@@ -39,6 +39,8 @@ log_dir="${app_dir}/logs_monitor"
 
 main()
 {
+    get_secret
+
     parse_args "$@"
 }
 

@@ -50,8 +50,9 @@ app_rebuild()
 
 app_update()
 {
-    ## TODO: store variables and secret to reset them correctly after update
     cd ${app_dir}
+
+    git remote update
 
     local remote_version=$(git rev-parse origin/master)
     local local_version=$(git rev-parse HEAD)
