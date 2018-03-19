@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 #==============================================================================
-# description     : Monitors the current forging node.
+# description     : Monitors the blockheight of the nodes.
 # @author		  : Nico Allers <info@reconnico.com>
 #==============================================================================
 
@@ -58,7 +58,7 @@ monitor_nodes()
 
     ## check block height of relay node
     block_height ${node_relay}
-    if [ -z ${blockheight_net} ] || [ $((${blockheight_net} - ${blockheight_node})) -gt 1 ]; then
+    if [ -z ${blockheight_net} ] || [ $((${blockheight_net} - ${blockheight_node})) -gt 9 ]; then
         ## relay is out of sync
         SECONDS=0
         lock_create
