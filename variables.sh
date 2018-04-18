@@ -12,9 +12,11 @@
 network='devnet' ## mainnet
 if [[ $network == 'devnet' ]]
     then
-        network_port=4001
+        network_port=4002
+        db="ark_devnet"
     else
         network_port=4001
+        db="ark_mainnet"
 fi
 
 # =====================

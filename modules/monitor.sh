@@ -29,6 +29,8 @@ monitor_nodes()
     block_height ${node_forging}
     if [ -z ${blockheight_net} ] || [ $((${blockheight_net} - ${blockheight_node})) -gt 1 ]; then
         ## forging is out of sync
+        log "Forging node ${node_forging} is out of sync..."
+
         SECONDS=0
         lock_create
         log "[switch] ${node_forging} -> ${node_relay}"
