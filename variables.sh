@@ -9,7 +9,13 @@
 # Network
 # =====================
 
-network='mainnet' ## devnet
+network='devnet' ## mainnet
+if [[ $network == 'devnet' ]]
+    then
+        network_port=4001
+    else
+        network_port=4001
+fi
 
 # =====================
 # Monitor
