@@ -10,7 +10,8 @@
 # =====================
 ark_start()
 {
-    ssh ark-1 network=${network} ark_path=${ark_path} export_path=${export_path} 'bash -s' <<'ENDSSH'
+    echo "Starting/Restarting node: $1"
+    ssh $1 network=${network} ark_path=${ark_path} export_path=${export_path} 'bash -s' <<'ENDSSH'
     PATH=${export_path}:$PATH
     export PATH
     forever stopall
@@ -35,7 +36,8 @@ ENDSSH
 # =====================
 block_height()
 {
-    blockheight_node=$(ssh $1 'echo $(psql -d ark_mainnet -t -c "SELECT height FROM blocks ORDER BY HEIGHT DESC LIMIT 1;" | xargs)')
+    echo "block height for ${db} checking also localhost:${network_port}/api/peers/"
+    blockheight_node=$(ssh $1 'echo $(psql -d ${db} -t -c "SELECT height FROM blocks ORDER BY HEIGHT DESC LIMIT 1;" | xargs)')
     blockheight_net=$(ssh $1 'heights=$(curl -s "http://localhost:${network_port}/api/peers" | jq -r ".peers[] | .height") && echo $(echo "${heights[*]}" | sort -nr | head -n1)')
 }
 
