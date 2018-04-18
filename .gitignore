@@ -1,3 +1,5 @@
 .idea/
 failover.log
 app.lock
+nodes.txt
+secret.txt
