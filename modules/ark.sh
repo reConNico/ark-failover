@@ -14,14 +14,8 @@ ark_start()
     ssh $1 network=${network} export_path=${export_path} 'bash -s' <<'ENDSSH'
     PATH=${export_path}:$PATH
     export PATH
-    node=`pgrep -a "node" | grep ark-node | awk '{print $1}'`
-    forever_process=`forever --plain list | grep ${node} | sed -nr 's/.*\[(.*)\].*/\1/p'`
-
-    if [ "${node}" != "" ] && [ "${node}" != "0" ]; then
-        forever restart ${forever_process} >&- 2>&-
-    else
-        forever start app.js --genesis genesisBlock.${network}.json --config config.${network}.json >&- 2>&-
-    fi
+    forever stopall
+    forever start app.js --genesis genesisBlock.${network}.json --config config.${network}.json >&- 2>&-
 ENDSSH
 }
 
