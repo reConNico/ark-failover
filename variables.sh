@@ -22,7 +22,7 @@ fi
 # =====================
 # Monitor
 # =====================
-monitor_sleep=120
+monitor_sleep=180
 monitor_interval=7
 
 # =====================
