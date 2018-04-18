@@ -29,3 +29,4 @@ monitor_interval=7
 # Path
 # =====================
 export_path='/home/$USER/.nvm/versions/node/v6.9.5/bin'
+ark_path='/home/$USER/ark-node/'

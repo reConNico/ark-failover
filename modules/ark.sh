@@ -10,12 +10,11 @@
 # =====================
 ark_start()
 {
-    ## TODO: test when ark process is not running
-    ssh $1 network=${network} export_path=${export_path} 'bash -s' <<'ENDSSH'
+    ssh ark-1 network=${network} ark_path=${ark_path} export_path=${export_path} 'bash -s' <<'ENDSSH'
     PATH=${export_path}:$PATH
     export PATH
     forever stopall
-    forever start app.js --genesis genesisBlock.${network}.json --config config.${network}.json >&- 2>&-
+    forever start --workingDir ${ark_path} ${ark_path}app.js --genesis genesisBlock.${network}.json --config config.${network}.json
 ENDSSH
 }
 
