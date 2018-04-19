@@ -31,7 +31,7 @@ monitor_nodes()
     log "height net ${node_forging}: ${blockheight_net}"
     log "height node ${node_forging}: ${blockheight_node}"
 
-    if [ -z ${blockheight_net} ] || [ $((${blockheight_net} - ${blockheight_node})) -gt 9 ]; then
+    if [ -z ${blockheight_net} ] || [ $((${blockheight_net} - ${blockheight_node})) -gt 15 ]; then
         ## forging is out of sync
         log "Forging node ${node_forging} is out of sync..."
 
@@ -68,7 +68,7 @@ monitor_nodes()
     log "height net ${node_forging}: ${blockheight_net}"
     log "height node ${node_forging}: ${blockheight_node}"
 
-    if [ -z ${blockheight_net} ] || [ $((${blockheight_net} - ${blockheight_node})) -gt 9 ]; then
+    if [ -z ${blockheight_net} ] || [ $((${blockheight_net} - ${blockheight_node})) -gt 15 ]; then
         ## relay is out of sync
         SECONDS=0
         lock_create
