@@ -36,9 +36,8 @@ ENDSSH
 # =====================
 block_height()
 {
-    log "block height for ${db} checking also localhost:${network_port}/api/peers/"
-    blockheight_node=$(ssh $1 'echo $(psql -d ${db} -t -c "SELECT height FROM blocks ORDER BY HEIGHT DESC LIMIT 1;" | xargs)')
-    blockheight_net=$(ssh $1 'heights=$(curl -s "http://localhost:${network_port}/api/peers" | jq -r ".peers[] | .height") && echo $(echo "${heights[*]}" | sort -nr | head -n1)')
+    blockheight_node=$(ssh $1 "echo $(psql -d ${db} -t -c 'SELECT height FROM blocks ORDER BY HEIGHT DESC LIMIT 1;' | xargs)")
+    blockheight_net=$(ssh $1 "heights=$(curl -s 'http://localhost:${network_port}/api/peers' | jq -r '.peers[] | .height') && echo $(echo '${heights[*]}' | sort -nr | head -n1)")
 }
 
 # =====================
