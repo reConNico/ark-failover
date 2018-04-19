@@ -28,9 +28,6 @@ monitor_nodes()
     ## check block height of forging node
     block_height ${node_forging}
 
-    log "height net ${node_forging}: ${blockheight_net}"
-    log "height node ${node_forging}: ${blockheight_node}"
-
     if [ -z ${blockheight_net} ] || [ $((${blockheight_net} - ${blockheight_node})) -gt 15 ]; then
         ## forging is out of sync
         log "Forging node ${node_forging} is out of sync..."
@@ -64,9 +61,6 @@ monitor_nodes()
 
     ## check block height of relay node
     block_height ${node_relay}
-
-    log "height net ${node_forging}: ${blockheight_net}"
-    log "height node ${node_forging}: ${blockheight_node}"
 
     if [ -z ${blockheight_net} ] || [ $((${blockheight_net} - ${blockheight_node})) -gt 15 ]; then
         ## relay is out of sync
