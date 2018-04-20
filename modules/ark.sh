@@ -20,6 +20,7 @@ ENDSSH
 }
 
 # =====================
+# fn currently unused
 # @param node $1
 # =====================
 ark_stop()
@@ -41,11 +42,12 @@ block_height()
 }
 
 # =====================
+# fn currently unused
 # @param node $1
 # =====================
 is_forging()
 {
-    result=`ssh -o ConnectTimeout=10 $1 pubkey=${pubkey} "curl -s --connect-timeout 1 http://localhost:{$network_port}/api/delegates/forging/status?publicKey=$pubkey 2>/dev/null | jq \".enabled\""`
+    result=`ssh -o ConnectTimeout=10 $1 network_port=${network_port} pubkey=${pubkey} "curl -s --connect-timeout 1 http://localhost:{$network_port}/api/delegates/forging/status?publicKey=$pubkey 2>/dev/null | jq \".enabled\""`
 
     if [ $result = true ]; then
         echo $result

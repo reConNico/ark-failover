@@ -34,27 +34,28 @@ monitor_nodes()
 
         SECONDS=0
         lock_create
-        log "[switch] ${node_forging} -> ${node_relay}"
+        log "[switch: ${node_forging}] ${node_forging} -> ${node_relay}"
 
         ## set secret on relay
         set_secret ${node_relay} ${secret}
         ark_start ${node_relay}
-        log "[set secret on relay] finished!"
+        log "[set secret on relay: ${node_forging}] finished!"
 
-        log "[blockheight] ${blockheight_node}/${blockheight_net} (node/net)"
+        log "[blockheight: ${node_forging}] ${blockheight_node}/${blockheight_net} (node/net)"
 
         ## reset secret on forging node
         set_secret ${node_forging}
         log "[reset secret on forging] finished!"
 
         ## rebuild database and reset secret on forging
-        log "[rebuild] ${node_forging} starting..."
+        log "[rebuild: ${node_forging}] starting..."
         rebuild ${node_forging}
-        log "[rebuild] ${node_forging} finished!"
+        ## todo: if rebuild fails (server being down) don't show bellow message, show an error
+        log "[rebuild: ${node_forging}] finished!"
 
         ## set nodes.txt
         set_nodes ${node_relay} ${node_forging}
-        log "[set nodes] finished!"
+        log "[set nodes: ${node_forging}] finished!"
 
         monitor_finish
     fi
@@ -64,12 +65,14 @@ monitor_nodes()
 
     if [ -z ${blockheight_net} ] || [ $((${blockheight_net} - ${blockheight_node})) -gt 15 ]; then
         ## relay is out of sync
+        log "Relay node ${node_relay} is out of sync..."
         SECONDS=0
         lock_create
-        log "[rebuild] ${node_relay} starting..."
-        log "[blockheight] ${blockheight_node}/${blockheight_net} (node/net)"
+        log "[rebuild ${node_relay}] starting..."
+        log "[blockheight ${node_relay}] ${blockheight_node}/${blockheight_net} (node/net)"
         rebuild ${node_relay}
-        log "[rebuild] ${node_relay} finished!"
+        ## todo: if rebuild fails (server being down) don't show bellow message, show an error
+        log "[rebuild ${node_relay}] finished!"
 
         monitor_finish
     fi
