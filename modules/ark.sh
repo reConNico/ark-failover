@@ -11,7 +11,7 @@
 ark_start()
 {
     log "Starting/Restarting node: $1"
-    ssh $1 network=${network} ark_path=${ark_path} export_path=${export_path} 'bash -s' <<'ENDSSH'
+    ssh -o ConnectTimeout=10 $1 network=${network} ark_path=${ark_path} export_path=${export_path} 'bash -s' <<'ENDSSH'
     PATH=${export_path}:$PATH
     export PATH
     forever stopall
@@ -24,7 +24,7 @@ ENDSSH
 # =====================
 ark_stop()
 {
-    ssh $1 export_path=${export_path} 'bash -s' <<'ENDSSH'
+    ssh -o ConnectTimeout=10 $1 export_path=${export_path} 'bash -s' <<'ENDSSH'
     PATH=${export_path}:$PATH
     export PATH
     forever stopall
@@ -36,8 +36,8 @@ ENDSSH
 # =====================
 block_height()
 {
-    blockheight_node=$(ssh $1 "psql -d ${db} -t -c 'SELECT height FROM blocks ORDER BY HEIGHT DESC LIMIT 1;'")
-    blockheight_net=$(ssh $1 network_port=${network_port} 'heights=$(curl -s "http://localhost:${network_port}/api/peers" | jq -r ".peers[] | .height") && echo $(echo "${heights[*]}" | sort -nr | head -n1)')
+    blockheight_node=$(ssh -o ConnectTimeout=10 $1 "psql -d ${db} -t -c 'SELECT height FROM blocks ORDER BY HEIGHT DESC LIMIT 1;'")
+    blockheight_net=$(ssh -o ConnectTimeout=10 $1 network_port=${network_port} 'heights=$(curl -s "http://localhost:${network_port}/api/peers" | jq -r ".peers[] | .height") && echo $(echo "${heights[*]}" | sort -nr | head -n1)')
 }
 
 # =====================
@@ -45,7 +45,7 @@ block_height()
 # =====================
 is_forging()
 {
-    result=`ssh $1 pubkey=${pubkey} "curl -s --connect-timeout 1 http://localhost:{$network_port}/api/delegates/forging/status?publicKey=$pubkey 2>/dev/null | jq \".enabled\""`
+    result=`ssh -o ConnectTimeout=10 $1 pubkey=${pubkey} "curl -s --connect-timeout 1 http://localhost:{$network_port}/api/delegates/forging/status?publicKey=$pubkey 2>/dev/null | jq \".enabled\""`
 
     if [ $result = true ]; then
         echo $result

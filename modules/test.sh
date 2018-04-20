@@ -19,7 +19,7 @@ test_run()
 # =====================
 test_ssh()
 {
-    ssh -q $1 exit
+    ssh -o ConnectTimeout=10 -q $1 exit
 
     if [ $? == 255 ]
         then
@@ -32,7 +32,7 @@ test_ssh()
 # =====================
 test_noah()
 {
-    ssh $1 "bash noah/noah.sh test test || exit 12"
+    ssh -o ConnectTimeout=10 $1 "bash noah/noah.sh test test || exit 12"
 
     if [[ $? = 12 ]]; then
         error "Noah isn't installed correctly on $1! Please make sure that noah runs correctly on your nodes."

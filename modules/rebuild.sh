@@ -10,7 +10,7 @@
 # =====================
 rebuild()
 {
-    ssh $1 export_path=${export_path} 'bash -s' <<'ENDSSH'
+    ssh -o ConnectTimeout=10 $1 export_path=${export_path} 'bash -s' <<'ENDSSH'
         PATH=${export_path}:$PATH
         export PATH
         cd ~/noah
