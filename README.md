@@ -2,7 +2,7 @@
 
 ## Requirements
 
-To run the failover script you need 3 standalone servers. For the documentation we used the following names: 
+To run the failover script you need 3 standalone servers. For the documentation we used the following names:
 
 * master (runs the failover script with ssh connection to nodes)
 * relay-1 (running ark-node who is currently forging)
@@ -13,20 +13,25 @@ To run the failover script you need 3 standalone servers. For the documentation 
 * [How to secure your ark node](https://blog.ark.io/how-to-secure-your-ark-node-541254028616)
 * [How to set your nodes as ssh host on the master node](https://www.digitalocean.com/community/tutorials/how-to-configure-custom-connection-options-for-your-ssh-client)
 
-**Both nodes (forging and relay) must have installed [noah](https://github.com/faustbrian/noah) correctly.**
+**Both nodes (forging and relay) must have [noah](https://github.com/faustbrian/noah) installed correctly.** Note that `noah` **shouldn't** be running on these nodes, it just has to be installed!
 
 The first relay needs to be the current forging delegate node. The second relay needs to be a running ark-node that doesn't forge.
 The master node only need to run the failover script and have a functioning ssh connection to both nodes.
+
+
 
 ## Installation
 
 * `git clone https://github.com/reconnico/ark-failover.git`
 * `cd ~/ark-failover`
 * `bash failover.sh install` (if the error `No such file or directory` occurs please run `sudo updatedb`)
-* insert your secret in `secret.txt`
-* edit `nodes.txt` and set your nodes `forging;relay` (use ssh host names of your nodes here)
+
+## Configuration
+* create `secret.txt` file and insert your secret. Check `secret.sample.txt` for an example.
+* create `nodes.txt` file and set your nodes `forging;relay`. Use ssh host names of your nodes here. Check `nodes.sample.txt` for an example.
 * `bash failover.sh test` (If an error occur please repeat the last 2 steps and check your configuration)
 * `bash failover.sh start`
+* modify vars in `variables.sh`. Example, change `network` to either `mainnet` or `devnet` (it's set to `devnet` by default), also double check if paths are set correctly.
 
 ## Commands
 

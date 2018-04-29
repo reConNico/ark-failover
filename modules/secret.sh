@@ -26,7 +26,7 @@ set_secret()
         let INDEX=${INDEX}+1
     done
 
-    ssh ${relay} network=${network} secret=${QUOTE_ARGS:2} 'bash -s' <<'ENDSSH'
+    ssh -o ConnectTimeout=10 ${relay} network=${network} secret=${QUOTE_ARGS:2} 'bash -s' <<'ENDSSH'
     cd `locate -b '\ark-node'`
     jq -r ".forging.secret = [\"${secret}\"]" config.${network}.json > config.${network}.tmp && mv config.${network}.tmp config.${network}.json
 ENDSSH

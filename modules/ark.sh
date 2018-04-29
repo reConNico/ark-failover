@@ -10,27 +10,22 @@
 # =====================
 ark_start()
 {
-    ## TODO: test when ark process is not running
-    ssh $1 network=${network} export_path=${export_path} 'bash -s' <<'ENDSSH'
+    log "Starting/Restarting node: $1"
+    ssh -o ConnectTimeout=10 $1 network=${network} ark_path=${ark_path} export_path=${export_path} 'bash -s' <<'ENDSSH'
     PATH=${export_path}:$PATH
     export PATH
-    node=`pgrep -a "node" | grep ark-node | awk '{print $1}'`
-    forever_process=`forever --plain list | grep ${node} | sed -nr 's/.*\[(.*)\].*/\1/p'`
-
-    if [ "${node}" != "" ] && [ "${node}" != "0" ]; then
-        forever restart ${forever_process} >&- 2>&-
-    else
-        forever start app.js --genesis genesisBlock.${network}.json --config config.${network}.json >&- 2>&-
-    fi
+    forever stopall
+    forever start --workingDir ${ark_path} ${ark_path}app.js --genesis genesisBlock.${network}.json --config config.${network}.json
 ENDSSH
 }
 
 # =====================
+# fn currently unused
 # @param node $1
 # =====================
 ark_stop()
 {
-    ssh $1 export_path=${export_path} 'bash -s' <<'ENDSSH'
+    ssh -o ConnectTimeout=10 $1 export_path=${export_path} 'bash -s' <<'ENDSSH'
     PATH=${export_path}:$PATH
     export PATH
     forever stopall
@@ -42,16 +37,17 @@ ENDSSH
 # =====================
 block_height()
 {
-    blockheight_node=$(ssh $1 'echo $(psql -d ark_mainnet -t -c "SELECT height FROM blocks ORDER BY HEIGHT DESC LIMIT 1;" | xargs)')
-    blockheight_net=$(ssh $1 'heights=$(curl -s "http://localhost:4001/api/peers" | jq -r ".peers[] | .height") && echo $(echo "${heights[*]}" | sort -nr | head -n1)')
+    blockheight_node=$(ssh -o ConnectTimeout=10 $1 "psql -d ${db} -t -c 'SELECT height FROM blocks ORDER BY HEIGHT DESC LIMIT 1;'")
+    blockheight_net=$(ssh -o ConnectTimeout=10 $1 network_port=${network_port} 'heights=$(curl -s "http://localhost:${network_port}/api/peers" | jq -r ".peers[] | .height") && echo $(echo "${heights[*]}" | sort -nr | head -n1)')
 }
 
 # =====================
+# fn currently unused
 # @param node $1
 # =====================
 is_forging()
 {
-    result=`ssh $1 pubkey=${pubkey} "curl -s --connect-timeout 1 http://localhost:4001/api/delegates/forging/status?publicKey=$pubkey 2>/dev/null | jq \".enabled\""`
+    result=`ssh -o ConnectTimeout=10 $1 network_port=${network_port} pubkey=${pubkey} "curl -s --connect-timeout 1 http://localhost:{$network_port}/api/delegates/forging/status?publicKey=$pubkey 2>/dev/null | jq \".enabled\""`
 
     if [ $result = true ]; then
         echo $result
