@@ -9,8 +9,8 @@ To run the failover script you need 3 standalone servers. For the documentation 
 * relay-2 (running ark-node who isn't forging right now. Node needs to be in sync!)
 
 #### Tutorials
-* [How to setup an ark node](https://blog.ark.io/how-to-setup-a-node-for-ark-and-a-basic-cheat-sheet-4f82910719da)
-* [How to secure your ark node](https://blog.ark.io/how-to-secure-your-ark-node-541254028616)
+* [How to setup an ark node](https://github.com/ArkEcosystem/docs/blob/master/system_administration/01_SetupArkNode.md)
+* [How to secure your ark node](https://github.com/ArkEcosystem/docs/blob/master/system_administration/02_SecureYourArkNode.md)
 * [How to set your nodes as ssh host on the master node](https://www.digitalocean.com/community/tutorials/how-to-configure-custom-connection-options-for-your-ssh-client)
 
 **Both nodes (forging and relay) must have [noah](https://github.com/faustbrian/noah) installed correctly.** Note that `noah` **shouldn't** be running on these nodes, it just has to be installed!
